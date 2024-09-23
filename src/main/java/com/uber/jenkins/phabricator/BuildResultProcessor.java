@@ -215,55 +215,62 @@ public class BuildResultProcessor {
         }
 
         if (runHarbormaster) {
-            logger.info("harbormaster", "Sending Harbormaster BUILD_URL via PHID: " + phid);
-            Task.Result sendUriResult = new SendHarbormasterUriTask(logger, diffClient, phid, buildUrl).run();
-
-            if (sendUriResult != Task.Result.SUCCESS) {
-                logger.info(LOGGING_TAG, "Unable to send BUILD_URL to Harbormaster. " +
-                        "This can be safely ignored, and is usually because it's already set.");
+            if (phid == "DO_NOT_REPORT_RESULT")
+            {
+                logger.info("harbormaster", "Skip sending to harbormaster, due to PHID: " + phid);
             }
+            else
+            {
+                logger.info("harbormaster", "Sending Harbormaster BUILD_URL via PHID: " + phid);
+                Task.Result sendUriResult = new SendHarbormasterUriTask(logger, diffClient, phid, buildUrl).run();
 
-            if (unitResults != null) {
+                if (sendUriResult != Task.Result.SUCCESS) {
+                    logger.info(LOGGING_TAG, "Unable to send BUILD_URL to Harbormaster. " +
+                            "This can be safely ignored, and is usually because it's already set.");
+                }
+
+                if (unitResults != null) {
+                    logger.info(
+                            LOGGING_TAG,
+                            String.format("Publishing unit results to Harbormaster for %d tests.",
+                                    unitResults.getResults().size())
+                    );
+                }
+                if (harbormasterCoverage != null) {
+                    logger.info(
+                            LOGGING_TAG,
+                            String.format("Publishing coverage data to Harbormaster for %d files.",
+                                    harbormasterCoverage.size())
+                    );
+                }
+                if (lintResults != null) {
+                    logger.info(
+                            LOGGING_TAG,
+                            String.format("Publishing lint results for %d violations",
+                                    lintResults.getResults().size())
+                    );
+                }
+
                 logger.info(
                         LOGGING_TAG,
-                        String.format("Publishing unit results to Harbormaster for %d tests.",
-                                unitResults.getResults().size())
+                        String.format("Sending build result to Harbormaster with PHID %s, message type: %s",
+                                phid,
+                                messageType.name()
+                        )
                 );
-            }
-            if (harbormasterCoverage != null) {
-                logger.info(
-                        LOGGING_TAG,
-                        String.format("Publishing coverage data to Harbormaster for %d files.",
-                                harbormasterCoverage.size())
-                );
-            }
-            if (lintResults != null) {
-                logger.info(
-                        LOGGING_TAG,
-                        String.format("Publishing lint results for %d violations",
-                                lintResults.getResults().size())
-                );
-            }
 
-            logger.info(
-                    LOGGING_TAG,
-                    String.format("Sending build result to Harbormaster with PHID %s, message type: %s",
-                            phid,
-                            messageType.name()
-                    )
-            );
-
-            Task.Result result = new SendHarbormasterResultTask(
-                    logger,
-                    diffClient,
-                    phid,
-                    messageType,
-                    unitResults,
-                    harbormasterCoverage,
-                    lintResults
-            ).run();
-            if (result != Task.Result.SUCCESS) {
-                return false;
+                Task.Result result = new SendHarbormasterResultTask(
+                        logger,
+                        diffClient,
+                        phid,
+                        messageType,
+                        unitResults,
+                        harbormasterCoverage,
+                        lintResults
+                ).run();
+                if (result != Task.Result.SUCCESS) {
+                    return false;
+                }
             }
         } else {
             logger.info("uberalls", "Harbormaster integration not enabled for this build.");
