@@ -215,7 +215,7 @@ public class BuildResultProcessor {
         }
 
         if (runHarbormaster) {
-            if (phid == "DO_NOT_REPORT_RESULT")
+            if (phid.equals("DO_NOT_REPORT_RESULT"))
             {
                 logger.info("harbormaster", "Skip sending to harbormaster, due to PHID: " + phid);
             }
