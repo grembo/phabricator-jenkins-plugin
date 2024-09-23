@@ -18,8 +18,8 @@ plugins {
 
 group = 'org.jenkins-ci.plugins'
 archivesBaseName = 'phabricator-plugin'
-version = '2.1.5'
-description = 'Integrate Jenkins with Phabricator Differentials and Uberalls'
+version = '2.1.6'
+description = 'Integrate Jenkins with Phabricator Differentials and Uberalls (forked!)'
 
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
@@ -28,19 +28,22 @@ tasks.withType(JavaCompile).configureEach {
   options.encoding = 'UTF-8'
 }
 
+tasks.withType(Javadoc).all { enabled = false }
+
 jenkinsPlugin {
-  jenkinsVersion = '2.387.1'
-  displayName = 'Phabricator Differential Plugin'
+  /* jenkinsVersion = '2.387.1' */
+  jenkinsVersion = '2.452.4'
+  displayName = 'Phabricator Differential Plugin (forked!)'
   url = 'https://wiki.jenkins-ci.org/display/JENKINS/Phabricator+Differential+Plugin'
-  gitHubUrl = 'https://github.com/uber/phabricator-jenkins-plugin'
+  gitHubUrl = 'https://github.com/grembo/phabricator-jenkins-plugin'
   shortName = 'phabricator-plugin'
   maskClasses = 'org.apache.http.'
 
   developers {
     developer {
-      id 'ai'
-      name 'Aiden Scandella'
-      email 'sc@ndella.com'
+      id 'grembo'
+      name 'Michael Gmelin'
+      email 'freebsd@grem.de'
     }
   }
 

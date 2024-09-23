@@ -5,7 +5,7 @@ Builds with gradle761
 
 ```
 pkg install gradle761
-gradle761 jpi
+JAVA_HOME=/usr/local/openjdk11 gradle761 jpi
 ```
 
 Original README below:
