@@ -1,3 +1,16 @@
+Tinkering to fix some issues with the plugin and customize for private
+needs. 
+
+Builds with gradle761
+
+```
+pkg install gradle761
+gradle761 jpi
+```
+
+Original README below:
+
+
 > **_NOTE:_**  This project is now **archived**.  The original maintainers from Uber have moved on to new opportunities.  
 >
 > If you or your organization is interested in becoming the project owner, please contact us at ospo@uber.com
