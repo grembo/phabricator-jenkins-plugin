@@ -71,7 +71,10 @@ public class XmlCoverageProvider extends CoverageProvider {
             dbf.setFeature("http://xml.org/sax/features/namespaces", false);
             dbf.setFeature("http://xml.org/sax/features/validation", false);
             dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+            // See https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html#java
             dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
             localDb = dbf.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
