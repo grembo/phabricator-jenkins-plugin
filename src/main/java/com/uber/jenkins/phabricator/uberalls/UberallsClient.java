@@ -27,7 +27,8 @@ import com.uber.jenkins.phabricator.utils.Logger;
 import net.sf.json.JSON;
 import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
-import net.sf.json.groovy.JsonSlurper;
+import groovy.json.JsonSlurper;
+import groovy.json.JsonOutput;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -81,7 +82,7 @@ public class UberallsClient {
         try {
             String coverageJSON = getCoverage(sha);
             JsonSlurper jsonParser = new JsonSlurper();
-            JSON responseJSON = jsonParser.parseText(coverageJSON);
+            JSON responseJSON = JSONObject.fromObject(JsonOutput.toJson(jsonParser.parseText(coverageJSON))); 
             if (responseJSON instanceof JSONNull) {
                 return null;
             }

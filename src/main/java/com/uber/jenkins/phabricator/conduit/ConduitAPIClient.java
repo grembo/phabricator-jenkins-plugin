@@ -21,7 +21,8 @@
 package com.uber.jenkins.phabricator.conduit;
 
 import net.sf.json.JSONObject;
-import net.sf.json.groovy.JsonSlurper;
+import groovy.json.JsonSlurper;
+import groovy.json.JsonOutput;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -85,7 +86,7 @@ public class ConduitAPIClient {
         }
 
         JsonSlurper jsonParser = new JsonSlurper();
-        return (JSONObject) jsonParser.parse(responseBody);
+        return JSONObject.fromObject(JsonOutput.toJson(jsonParser.parse(responseBody)));
     }
 
     /**

@@ -1,6 +1,12 @@
 # Changelog
 
-### 2.1.6 (Unreleased)
+### 2.1.7
+
+* Add dependency on groovy-json
+
+### 2.1.6
+
+* Do not report to harbormaster if special PHID is passed
 
 ### 2.1.5
 

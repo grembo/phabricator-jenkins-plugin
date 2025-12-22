@@ -35,7 +35,8 @@ import com.uber.jenkins.phabricator.uberalls.UberallsClient;
 import com.uber.jenkins.phabricator.unit.UnitResult;
 
 import net.sf.json.JSONObject;
-import net.sf.json.groovy.JsonSlurper;
+import groovy.json.JsonSlurper;
+import groovy.json.JsonOutput;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -173,7 +174,7 @@ public class TestUtils {
     }
 
     private static JSONObject slurpFromInputStream(InputStream in) throws IOException {
-        return (JSONObject) new JsonSlurper().parse(in);
+        return JSONObject.fromObject(JsonOutput.toJson(JsonSlurper().parse(in)));
     }
 
     public static HttpRequestHandler makeHttpHandler(final int statusCode, final String body) {

@@ -18,7 +18,7 @@ plugins {
 
 group = 'org.jenkins-ci.plugins'
 archivesBaseName = 'phabricator-plugin'
-version = '2.1.6'
+version = '2.1.7'
 description = 'Integrate Jenkins with Phabricator Differentials and Uberalls (forked!)'
 
 sourceCompatibility = 1.11
@@ -62,6 +62,7 @@ dependencies {
   implementation 'org.jenkins-ci.plugins:junit:1189.v1b_e593637fa_e'
   implementation 'org.jenkins-ci.plugins:cobertura:1.17'
   implementation 'org.jenkins-ci.plugins:jacoco:3.3.2'
+  implementation 'org.codehaus.groovy:groovy-json:3.0.9'
 
   jenkinsPlugins 'io.jenkins.plugins:checks-api:1.8.1@jar'
   jenkinsPlugins 'io.jenkins.plugins:plugin-util-api:3.1.0@jar'
